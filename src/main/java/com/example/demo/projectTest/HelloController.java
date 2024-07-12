@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.projectTest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +11,6 @@ public class HelloController {
     public String hello(Model model) {
         model.addAttribute("data", "hello!!!");
         return "hello";
-    }
-
-    @GetMapping("main")
-    public String main() {
-        return "main";
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.projectTest.Member;
+import com.example.demo.projectTest.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

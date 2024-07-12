@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.projectTest;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

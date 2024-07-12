@@ -1,9 +1,12 @@
+server:
+  port: 8088
+
 spring:
   datasource:
-    url: jdbc:mysql://mydb.clkwweaguf6x.ap-northeast-2.rds.amazonaws.com:3306/mydb
+    url: jdbc:mysql://mydatabase.clkwweaguf6x.ap-northeast-2.rds.amazonaws.com:3306/mydatabase
     username: woo
     password: 84547909a!
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:

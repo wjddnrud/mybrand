@@ -9,16 +9,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter @Setter
 @Table(name = "orders")
 public class Order {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")          //dba 분들이 선호하는 방식 '테이블명_id'
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)  // 모든 연관관계는 지연로딩으로 설정할것!   // JPQL select o From order o; -> SQL select * from order N+1 (100 + 1 order)
     @JoinColumn(name = "member_id")  // join할 컬럼 -> 외래키 이름이 member_id가 된다.
     private Member member;
 

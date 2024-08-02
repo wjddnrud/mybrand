@@ -20,7 +20,7 @@ public class Member {
     @Embedded   // 내장타입을 포함했다는 어노테이션으로 맵핑해주면된다.
     private Address address;            // LINE :: 주소 값타입
 
-    @OneToMany(mappedBy = "member") // 읽기전용이 된다. member 필드에 의해서 나는 맵핑 된거야.
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL) // 읽기전용이 된다. member 필드에 의해서 나는 맵핑 된거야.
     private List<Order> orders = new ArrayList<>();
 
 

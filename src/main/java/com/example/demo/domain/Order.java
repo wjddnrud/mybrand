@@ -24,10 +24,10 @@ public class Order {
     @JoinColumn(name = "member_id")  // join할 컬럼 -> 외래키 이름이 member_id가 된다.
     private Member member;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne           // 액세스를 자주 하는곳에 foreign키를 둔다
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)           // 액세스를 자주 하는곳에 foreign키를 둔다
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
@@ -36,6 +36,21 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;     // ORDER, CANCEL
 
+    // [연관관계 편의 메서드]
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 
 
 }

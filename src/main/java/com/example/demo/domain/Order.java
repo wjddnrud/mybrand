@@ -1,9 +1,10 @@
 package com.example.demo.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.codehaus.groovy.ast.expr.UnaryMinusExpression;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Getter @Setter
 @Table(name = "orders")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)      // 직접 생성하면 안되고 다른 스타일로 생성해야하는구나 -> 생성 메서드를 이용해야하는구나 하고 소통할 수 있다.
 public class Order {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +52,53 @@ public class Order {
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    // [생성 메서드]
+    // 복잡한 생성은 별도의 생성 메서드가 있으면 좋다.
+    // OrderItem... => ...문법으로 작성하게되면 여러개를 받을수 있다.
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER); // 처음 상태를 주문 상태로 강제시킨다.
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+
+    // [비즈니스 로직]
+    /**
+     * 주문 취소
+     */
+    public void cancel() {
+        if (delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("이미 배송 완료된 상품은 취소가 불가능합니다.");
+        }
+
+        this.setStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    // [조회 로직]
+    /**
+     * 전체 주문 가격 조회
+     * @return
+     */
+    public int getTotalPrice() {
+
+//        int totalPrice = 0;
+//        for (OrderItem orderItem : orderItems) {
+//            totalPrice += orderItem.getTotalPrice();
+//        }
+//        return totalPrice;
+
+        // java의 stream으로 바꿔서 위와 같은 로직을 아래와 같이 간결하게 작성할 수 있다.
+        return orderItems.stream().mapToInt(OrderItem::getTotalPrice).sum();
     }
 
 

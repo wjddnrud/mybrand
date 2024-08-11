@@ -34,7 +34,7 @@ public abstract class Item {
      * @param quantity
      */
     public void addStock(int quantity) {
-        this.stockQuantity = quantity;
+        this.stockQuantity += quantity;
     }
 
     /**

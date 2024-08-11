@@ -17,6 +17,10 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
 
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
 logging:
   level:
     org.hibernate.SQL : debug

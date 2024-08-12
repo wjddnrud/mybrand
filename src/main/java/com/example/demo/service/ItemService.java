@@ -20,7 +20,7 @@ public class ItemService {
      * @param item
      */
     @Transactional
-    public void save(Item item) {
+    public void saveItem(Item item) {
         itemRepository.save(item);
     }
 

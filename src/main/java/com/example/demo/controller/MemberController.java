@@ -25,7 +25,7 @@ public class MemberController {
         return "members/createMemberForm";
     }
 
-    @PostMapping("members/new")
+    @PostMapping("/members/new")
     public String create(@Valid MemberForm form, BindingResult result) {
         // 첫번째 파라미터에서 발생한 오류를 넘겨 받아 입력값 체크를 할 수 있다.
 

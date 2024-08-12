@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -39,6 +41,15 @@ public class MemberController {
 
         memberService.join(member);
         return "redirect:/";
+    }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();
+        // 주석 : 아래와 같이 Entity를 그대로 전달하는것 보다 DTO로 변환해서 넘겨주어야 한다.
+        List<MemberForm> memberForms = (members.stream().map(MemberForm::toMemberForm).toList());
+        model.addAttribute("members", memberForms);
+        return "members/memberList";
     }
 
 

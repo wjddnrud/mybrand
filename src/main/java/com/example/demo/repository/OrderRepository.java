@@ -39,10 +39,10 @@ public class OrderRepository {
         // 주문 상태 검색
         if (orderSearch.getOrderStatus() != null) {
             if (isFirstCondition) {
-                jpql += "  where";
+                jpql += " where";
                 isFirstCondition = false;
             } else {
-                jpql += "  and";
+                jpql += " and";
             }
             jpql += " o.status = :status";
         }
@@ -50,21 +50,21 @@ public class OrderRepository {
         // 회원 이름 검색
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             if (isFirstCondition) {
-                jpql += "  where";
+                jpql += " where";
                 isFirstCondition = false;
             } else {
-                jpql += "  and";
+                jpql += " and";
             }
-            jpql += "  m.name like :memberName";
+            jpql += " m.name like :name";
         }
 
         TypedQuery<Order> query = em.createQuery(jpql, Order.class).setMaxResults(1000);
 
         if (orderSearch.getOrderStatus() != null) {
-            query.setParameter("status", orderSearch.getOrderStatus());
+            query = query.setParameter("status", orderSearch.getOrderStatus());
         }
-        if (orderSearch.getMemberName() != null) {
-            query.setParameter("memberName", orderSearch.getMemberName());
+        if (StringUtils.hasText(orderSearch.getMemberName())) {
+            query = query.setParameter("name", orderSearch.getMemberName());
         }
 
         return query.getResultList();

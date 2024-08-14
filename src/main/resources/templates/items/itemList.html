@@ -13,9 +13,8 @@
             <th>#</th>
             <th>상품명</th>
             <th>가격</th>
-            <th>수량</th>
-            <th>저자</th>
-            <th>ISBN</th>
+            <th>재고수량</th>
+            <th></th>
             </thead>
             <tbody>
             <tr th:each="item : ${items}">
@@ -23,8 +22,9 @@
                 <td th:text="${item.name}"></td>
                 <td th:text="${item.price}"></td>
                 <td th:text="${item.stockQuantity}"></td>
-                <td th:text="${item.author}"></td>
-                <td th:text="${item.isbn}"></td>
+                <td>
+                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}" class="btn btn-primary" role="button">수정</a>
+                </td>
             </tr>
             </tbody>
         </table>

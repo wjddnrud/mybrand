@@ -56,4 +56,14 @@ public class MemberService {
     }
 
 
+    /**
+     * 회원 이름 수정
+     * @param id
+     * @param name
+     */
+    @Transactional
+    public void update(Long id, String name) {
+        MemberEntity member = memberRepository.findOne(id);
+        member.setName(name);
+    }
 }

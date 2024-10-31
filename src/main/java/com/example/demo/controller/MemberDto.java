@@ -17,7 +17,7 @@ public class MemberDto {
     private String street;
     private String zipcode;
 
-    public static MemberDto toMemberForm(MemberEntity memberEntity) {
+    public static MemberDto toMemberDto(MemberEntity memberEntity) {
         MemberDto memberDto = new MemberDto();
         memberDto.id = memberEntity.getId();
         memberDto.name = memberEntity.getName();

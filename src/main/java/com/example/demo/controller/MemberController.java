@@ -21,7 +21,7 @@ public class MemberController {
 
     @GetMapping("/members/new")
     public String createForm(Model model) {
-        model.addAttribute("memberForm", new MemberDto());
+        model.addAttribute("memberDto", new MemberDto());
         return "members/createMemberForm";
     }
 
@@ -47,7 +47,7 @@ public class MemberController {
     public String list(Model model) {
         List<MemberEntity> memberEntities = memberService.findMembers();
         // 주석 : 아래와 같이 Entity를 그대로 전달하는것 보다 DTO로 변환해서 넘겨주어야 한다.
-        List<MemberDto> memberDtos = (memberEntities.stream().map(MemberDto::toMemberForm).toList());
+        List<MemberDto> memberDtos = (memberEntities.stream().map(MemberDto::toMemberDto).toList());
         model.addAttribute("members", memberDtos);
         return "members/memberList";
     }

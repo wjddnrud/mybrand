@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.Member;
-import com.example.demo.domain.Order;
-import com.example.demo.domain.item.Item;
+import com.example.demo.domain.MemberEntity;
+import com.example.demo.domain.OrderEntity;
+import com.example.demo.domain.item.ItemEntity;
 import com.example.demo.repository.OrderSearch;
 import com.example.demo.service.ItemService;
 import com.example.demo.service.MemberService;
@@ -26,11 +26,11 @@ public class OrderController {
     @GetMapping("/order")
     public String createForm(Model model) {
 
-        List<Member> members = memberService.findMembers();
-        List<Item> items = itemService.findItems();
+        List<MemberEntity> memberEntities = memberService.findMembers();
+        List<ItemEntity> itemEntities = itemService.findItems();
 
-        model.addAttribute("members", members);
-        model.addAttribute("items", items);
+        model.addAttribute("members", memberEntities);
+        model.addAttribute("items", itemEntities);
 
         return "order/orderForm";
     }
@@ -46,8 +46,8 @@ public class OrderController {
 
     @GetMapping("/orders")
     public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
-        List<Order> orders = orderService.findOrders(orderSearch);
-        model.addAttribute("orders", orders);
+        List<OrderEntity> orderEntities = orderService.findOrders(orderSearch);
+        model.addAttribute("orders", orderEntities);
         return "order/orderList";
     }
 

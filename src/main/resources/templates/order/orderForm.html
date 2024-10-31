@@ -6,7 +6,7 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
 
-    <form role="form" action="/order" method="post">
+    <form role="form" action="/orderEntity" method="post">
         <div>
             <label for="member">주문회원</label>
             <select name="memberId" id="member" class="form-control">
@@ -17,12 +17,12 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="item">상품명</label>
-            <select name="itemId" id="item" class="form-control">
+            <label for="itemEntity">상품명</label>
+            <select name="itemId" id="itemEntity" class="form-control">
                 <option value="">상품선택</option>
-                <option th:each="item : ${items}"
-                        th:value="${item.id}"
-                        th:text="${item.name}" />
+                <option th:each="itemEntity : ${itemEntities}"
+                        th:value="${itemEntity.id}"
+                        th:text="${itemEntity.name}" />
             </select>
         </div>
         <div class="form-group">

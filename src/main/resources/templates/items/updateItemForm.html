@@ -12,7 +12,7 @@
 
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
 
-    <form th:object="${bookForm}" method="post">
+    <form th:object="${bookDto}" method="post">
         <!--id-->
         <input type="hidden" th:field="*{id}" />
 

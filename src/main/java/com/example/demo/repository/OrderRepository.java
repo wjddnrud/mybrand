@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.domain.Order;
+import com.example.demo.domain.OrderEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
@@ -20,20 +20,20 @@ public class OrderRepository {
     private final OffsetScrollPositionHandlerMethodArgumentResolver offsetResolver;
 
     // 주문 내용 저장
-    public void save(Order order) {
-        em.persist(order);
+    public void save(OrderEntity orderEntity) {
+        em.persist(orderEntity);
     }
 
     // 주문 내용 단건 조회
-    public Order findOne(Long id) {
-        return em.find(Order.class, id);
+    public OrderEntity findOne(Long id) {
+        return em.find(OrderEntity.class, id);
     }
 
-    public List<Order> findAll(OrderSearch orderSearch) {
+    public List<OrderEntity> findAll(OrderSearch orderSearch) {
 
 
         // JPQL을 이용한 동적 쿼리
-        String jpql = "select o from Order o join o.member m";
+        String jpql = "select o from OrderEntity o join o.member m";
         boolean isFirstCondition = true;
 
         // 주문 상태 검색
@@ -58,7 +58,7 @@ public class OrderRepository {
             jpql += " m.name like :name";
         }
 
-        TypedQuery<Order> query = em.createQuery(jpql, Order.class).setMaxResults(1000);
+        TypedQuery<OrderEntity> query = em.createQuery(jpql, OrderEntity.class).setMaxResults(1000);
 
         if (orderSearch.getOrderStatus() != null) {
             query = query.setParameter("status", orderSearch.getOrderStatus());
@@ -86,10 +86,10 @@ public class OrderRepository {
      * @param orderSearch
      * @return
      */
-    public List<Order> findAllByCriteria(OrderSearch orderSearch) {
+    public List<OrderEntity> findAllByCriteria(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Order> cq = cb.createQuery(Order.class);
-        Root<Order> o = cq.from(Order.class);
+        CriteriaQuery<OrderEntity> cq = cb.createQuery(OrderEntity.class);
+        Root<OrderEntity> o = cq.from(OrderEntity.class);
         Join<Object, Object> m = o.join("member", JoinType.INNER);
 
         List<Predicate> criteria = new ArrayList<>();
@@ -107,7 +107,7 @@ public class OrderRepository {
         }
 
         cq.where(cb.and(criteria.toArray(new Predicate[criteria.size()])));
-        TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000);
+        TypedQuery<OrderEntity> query = em.createQuery(cq).setMaxResults(1000);
         return query.getResultList();
     }
 }

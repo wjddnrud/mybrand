@@ -7,15 +7,16 @@ import lombok.Setter;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
+@Table(name = "delivery")
 @Getter @Setter
-public class Delivery {
+public class DeliveryEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_id")
     private Long id;
 
-    @OneToOne(mappedBy = "delivery", fetch = LAZY, cascade = CascadeType.ALL)       // 액세스를 자주 하는곳에 foreign키를 둔다
-    private Order order;
+    @OneToOne(mappedBy = "deliveryEntity", fetch = LAZY, cascade = CascadeType.ALL)       // 액세스를 자주 하는곳에 foreign키를 둔다
+    private OrderEntity orderEntity;
 
     @Embedded
     private Address address;

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Member;
+import com.example.demo.domain.MemberEntity;
+import com.example.demo.domain.MemberEntity;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,22 +19,22 @@ public class MemberService {
 
     /**
      * 회원 가입
-     * @param member
+     * @param memberEntity
      * @return
      */
     @Transactional
-    public Long join(Member member) {
-        validateDuplicateMember(member);
-        memberRepository.save(member);
-        return member.getId();      // 저장된 id값이 뭔지 리턴해준다.
+    public Long join(MemberEntity memberEntity) {
+        validateDuplicateMember(memberEntity);
+        memberRepository.save(memberEntity);
+        return memberEntity.getId();      // 저장된 id값이 뭔지 리턴해준다.
     }
 
 
     // 주석 : 중복 회원이 있는지 검사하는 로직
     // 주의 : 멀티스레드의 상황을 고려해서 데이터베이스에 member의 name을 unique제약조건을 걸어주는게 좋은 방법이다.
-    private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findByName(member.getName());
-        if (!findMembers.isEmpty()) {
+    private void validateDuplicateMember(MemberEntity memberEntity) {
+        List<MemberEntity> findMemberEntities = memberRepository.findByName(memberEntity.getName());
+        if (!findMemberEntities.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }
@@ -41,7 +42,7 @@ public class MemberService {
     /**
      * 회원 전체 조회
      */
-    public List<Member> findMembers() {
+    public List<MemberEntity> findMembers() {
         return memberRepository.findAll();
     }
 
@@ -50,7 +51,7 @@ public class MemberService {
      * @param memberId
      * @return
      */
-    public Member findOne(Long memberId) {
+    public MemberEntity findOne(Long memberId) {
         return memberRepository.findOne(memberId);
     }
 

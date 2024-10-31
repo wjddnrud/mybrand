@@ -1,6 +1,6 @@
 package com.example.demo.domain.item;
 
-import com.example.demo.domain.Category;
+import com.example.demo.domain.CategoryEntity;
 import com.example.demo.exception.NotEnoughStockException;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "item")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)   // 한 테이블의 모두 때려박는 방식
 @DiscriminatorColumn(name = "dtype")        // 구분타입
 @Getter @Setter
-public abstract class Item {
+public abstract class ItemEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
@@ -23,8 +24,8 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
-    @ManyToMany(mappedBy = "items")
-    private List<Category> categories = new ArrayList<>();
+    @ManyToMany(mappedBy = "itemEntities")
+    private List<CategoryEntity> categories = new ArrayList<>();
 
 
     // == 비즈니스 로직 ==            => setter 없이 사용할때도 아래와 같이 핵심 비즈니스를 생성해서 변경해야한다. >> 가장 객체지향적인 방향

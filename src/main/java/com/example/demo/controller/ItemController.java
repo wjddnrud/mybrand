@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.item.Book;
-import com.example.demo.domain.item.Item;
+import com.example.demo.domain.item.ItemEntity;
 import com.example.demo.service.ItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,12 +23,12 @@ public class ItemController {
 
     @GetMapping("/items/new")
     public String createForm(Model model) {
-        model.addAttribute("bookForm", new BookForm());
+        model.addAttribute("bookForm", new BookDto());
         return "items/createItemForm";
     }
 
     @PostMapping("/items/new")
-    public String create(@Valid BookForm form, BindingResult result) {
+    public String create(@Valid BookDto form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "items/createItemForm";
@@ -48,9 +47,9 @@ public class ItemController {
 
     @GetMapping("/items")
     public String list(Model model) {
-        List<Item> items = itemService.findItems();
+        List<ItemEntity> itemEntities = itemService.findItems();
         // List<BookForm> bookForms = (items.stream().map(BookForm::toBookForm).toList());
-        model.addAttribute("items", items);
+        model.addAttribute("items", itemEntities);
         return "items/itemList";
     }
 
@@ -58,20 +57,20 @@ public class ItemController {
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
         Book item = (Book) itemService.findOne(itemId);
 
-        BookForm bookForm = new BookForm();
-        bookForm.setId(item.getId());
-        bookForm.setName(item.getName());
-        bookForm.setPrice(item.getPrice());
-        bookForm.setStockQuantity(item.getStockQuantity());
-        bookForm.setAuthor(item.getAuthor());
-        bookForm.setIsbn(item.getIsbn());
+        BookDto bookDto = new BookDto();
+        bookDto.setId(item.getId());
+        bookDto.setName(item.getName());
+        bookDto.setPrice(item.getPrice());
+        bookDto.setStockQuantity(item.getStockQuantity());
+        bookDto.setAuthor(item.getAuthor());
+        bookDto.setIsbn(item.getIsbn());
 
-        model.addAttribute("bookForm", bookForm);
+        model.addAttribute("bookForm", bookDto);
         return "items/updateItemForm";
     }
 
     @PostMapping("/items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") @Valid BookForm form, BindingResult result) {
+    public String updateItem(@ModelAttribute("form") @Valid BookDto form, BindingResult result) {
         if (result.hasErrors()) {
             return "items/updateItemForm";
         }

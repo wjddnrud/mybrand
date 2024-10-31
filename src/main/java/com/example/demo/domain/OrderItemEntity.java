@@ -1,6 +1,6 @@
 package com.example.demo.domain;
 
-import com.example.demo.domain.item.Item;
+import com.example.demo.domain.item.ItemEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,9 +10,10 @@ import lombok.Setter;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
+@Table(name = "orderItem")
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderItem {
+public class OrderItemEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
@@ -20,11 +21,11 @@ public class OrderItem {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "item_id")
-    private Item item;
+    private ItemEntity itemEntity;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "order_id")
-    private Order order;
+    private OrderEntity orderEntity;
 
     private int orderPrice;            // LINE :: 주문가격
     private int count;                 // LINE :: 주문 수량
@@ -36,19 +37,19 @@ public class OrderItem {
 //    }
 
     // [생성 메서드]
-    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
-        orderItem.setOrderPrice(orderPrice);
-        orderItem.setCount(count);
+    public static OrderItemEntity createOrderItem(ItemEntity itemEntity, int orderPrice, int count) {
+        OrderItemEntity orderItemEntity = new OrderItemEntity();
+        orderItemEntity.setItemEntity(itemEntity);
+        orderItemEntity.setOrderPrice(orderPrice);
+        orderItemEntity.setCount(count);
 
-        item.removeStock(count);
-        return orderItem;
+        itemEntity.removeStock(count);
+        return orderItemEntity;
     }
 
     // [비즈니스 로직]
     public void cancel() {
-        getItem().addStock(count);  // 주문 취소에 따라 재고 수량 원복 시켜주기
+        getItemEntity().addStock(count);  // 주문 취소에 따라 재고 수량 원복 시켜주기
     }
 
     // [조회 로직]

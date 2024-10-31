@@ -9,7 +9,7 @@ import lombok.Setter;
 @DiscriminatorValue("A")    //기본적으로 테이블명으로 들어감
 @Getter
 @Setter
-public class Album extends Item {
+public class Album extends ItemEntity {
 
     private String artist;
     private String etc;

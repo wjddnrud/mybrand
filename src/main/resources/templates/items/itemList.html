@@ -17,13 +17,13 @@
             <th></th>
             </thead>
             <tbody>
-            <tr th:each="item : ${items}">
-                <td th:text="${item.id}"></td>
-                <td th:text="${item.name}"></td>
-                <td th:text="${item.price}"></td>
-                <td th:text="${item.stockQuantity}"></td>
+            <tr th:each="itemEntity : ${itemEntities}">
+                <td th:text="${itemEntity.id}"></td>
+                <td th:text="${itemEntity.name}"></td>
+                <td th:text="${itemEntity.price}"></td>
+                <td th:text="${itemEntity.stockQuantity}"></td>
                 <td>
-                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}" class="btn btn-primary" role="button">수정</a>
+                    <a href="#" th:href="@{/itemEntities/{id}/edit (id=${itemEntity.id})}" class="btn btn-primary" role="button">수정</a>
                 </td>
             </tr>
             </tbody>

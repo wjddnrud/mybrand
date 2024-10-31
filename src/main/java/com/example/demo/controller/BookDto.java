@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class BookForm {
+public class BookDto {
 
     private Long id;
 
@@ -21,14 +21,14 @@ public class BookForm {
 
     private String isbn;
 
-    public static BookForm toBookForm(Book book) {
-        BookForm bookForm = new BookForm();
-        bookForm.name = book.getName();
-        bookForm.price = book.getPrice();
-        bookForm.stockQuantity = book.getStockQuantity();
-        bookForm.author = book.getAuthor();
-        bookForm.isbn = book.getIsbn();
-        return bookForm;
+    public static BookDto toBookForm(Book book) {
+        BookDto bookDto = new BookDto();
+        bookDto.name = book.getName();
+        bookDto.price = book.getPrice();
+        bookDto.stockQuantity = book.getStockQuantity();
+        bookDto.author = book.getAuthor();
+        bookDto.isbn = book.getIsbn();
+        return bookDto;
     }
 
 }

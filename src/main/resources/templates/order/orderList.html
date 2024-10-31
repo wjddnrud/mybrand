@@ -43,16 +43,16 @@
             <th></th>
             </thead>
             <tbody>
-            <tr th:each="item : ${orders}">
-                <td th:text="${item.id}"></td>
-                <td th:text="${item.member.name}"></td>
-                <td th:text="${item.orderItems[0].item.name}"></td>
-                <td th:text="${item.orderItems[0].orderPrice}"></td>
-                <td th:text="${item.orderItems[0].count}"></td>
-                <td th:text="${item.status}"></td>
-                <td th:text="${item.orderDate}"></td>
+            <tr th:each="itemEntity : ${orderEntities}">
+                <td th:text="${itemEntity.id}"></td>
+                <td th:text="${itemEntity.member.name}"></td>
+                <td th:text="${itemEntity.orderItemEntities[0].itemEntity.name}"></td>
+                <td th:text="${itemEntity.orderItemEntities[0].orderPrice}"></td>
+                <td th:text="${itemEntity.orderItemEntities[0].count}"></td>
+                <td th:text="${itemEntity.status}"></td>
+                <td th:text="${itemEntity.orderDate}"></td>
                 <td>
-                    <a th:if="${item.status.name() == 'ORDER'}" href="#" th:href="'javascript:cancel('+${item.id}+')'"
+                    <a th:if="${itemEntity.status.name() == 'ORDER'}" href="#" th:href="'javascript:cancel('+${itemEntity.id}+')'"
                        class="btn btn-danger">CANCEL</a>
                 </td>
             </tr>
@@ -69,7 +69,7 @@
     function cancel(id) {
         var form = document.createElement("form");
         form.setAttribute("method", "post");
-        form.setAttribute("action", "/orders/" + id + "/cancel");
+        form.setAttribute("action", "/orderEntities/" + id + "/cancel");
         document.body.appendChild(form);
         form.submit();
     }

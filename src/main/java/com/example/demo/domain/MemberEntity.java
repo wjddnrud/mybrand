@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ public class MemberEntity {
     @Column(name = "member_id")
     private Long id;
 
+    @NotEmpty
     private String name;                // LINE :: 회원명
 
 
